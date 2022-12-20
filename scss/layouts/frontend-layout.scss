@@ -1,0 +1,13 @@
+.frontend-layout {
+  display: flex;
+  flex-wrap: wrap;
+
+  aside {
+    flex-basis: 150px;
+  }
+
+  main {
+    flex-grow: 1;
+    flex-basis: 500px;
+  }
+}

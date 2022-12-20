@@ -1,0 +1,41 @@
+.expo-display {
+  container-type: inline-size;
+
+  .image-list {
+    // display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    // display: flex;
+    // flex-wrap: wrap;
+    // gap: 1em;
+
+    @include media-breakpoint-up(sm) {
+      columns: 1;
+    }
+
+    @include media-breakpoint-up(md) {
+      columns: 2;
+    }
+
+    @include media-breakpoint-up(lg) {
+      columns: 3;
+    }
+
+    @include media-breakpoint-up(xl) {
+      columns: 4;
+    }
+
+    @include media-breakpoint-up(xxl) {
+      columns: 5;
+    }
+  }
+
+  .image-item {
+    flex-basis: 350px;
+    margin-bottom: 1em;
+
+    img {
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+}

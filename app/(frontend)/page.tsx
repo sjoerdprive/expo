@@ -1,8 +1,8 @@
-export default function Page() {
+export default function FrontPage() {
   return (
-    <div>
+    <>
       <h1>Page</h1>
       <button className="btn btn-primary">Booten</button>
-    </div>
+    </>
   );
 }

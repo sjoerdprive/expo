@@ -19,9 +19,10 @@ model Expo {
 
 model Image {
   id       String  @id @unique @default(uuid())
-  filename String  @unique
+  filename String
+  src      String  @unique
   title    String
-  alt      String?
+  alt      String
   caption  String?
   Expo     Expo?   @relation(fields: [expoId], references: [id])
   expoId   String?
