@@ -19,7 +19,7 @@ export default async function FrontendLayout({
   const expos = await getExpos();
 
   return (
-    <div className="frontend-layout">
+    <div className="frontend-layout vh-100">
       <aside className="p-3">
         <ExpoNav expos={expos} />
       </aside>

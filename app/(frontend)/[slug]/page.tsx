@@ -18,17 +18,18 @@ async function getExpo(slug: string) {
 export default async function ExpoPage({ params }: IExpoPageProps) {
   const expo = await getExpo(params.slug);
 
-  console.log(expo);
-
   return (
     <div className="expo-display">
       <h1>{expo?.title}</h1>
       <ul className="list-unstyled image-list">
-        {expo?.images?.map((img, i) => (
-          <li className="image-item" key={i}>
-            <img {...img} />
-          </li>
-        ))}
+        {expo?.images?.map((img, i) => {
+          const { expoId, ...imgProps } = img;
+          return (
+            <li className="image-item" key={i}>
+              <img {...imgProps} />
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
