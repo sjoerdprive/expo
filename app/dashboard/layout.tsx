@@ -7,11 +7,12 @@ interface IDashboardLayoutProps {
 }
 
 export default function DashboardLayout({ children }: IDashboardLayoutProps) {
-  const { data: session, status } = useSession({ required: true });
+  // const { data: session, status } = useSession({ required: true });
+  // if (status === 'loading') return <p>Laden...</p>;
 
-  if (status === 'loading') return <p>Laden...</p>;
+  // if (status === 'authenticated') return <>{children}</>;
 
-  if (status === 'authenticated') return <>{children}</>;
+  return <>{children}</>
 
   return (
     <p>

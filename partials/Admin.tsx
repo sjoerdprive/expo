@@ -2,34 +2,61 @@
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faDashboard } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHome,
+  faDashboard,
+  faCaretLeft,
+} from '@fortawesome/free-solid-svg-icons';
 import { usePathname } from 'next/navigation';
 
 export default function Admin() {
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession()
+  const status = 'authenticated';
   const pathname = usePathname();
 
   const isOnDashboard = pathname?.match('/dashboard');
+  const isNestedDashboard = pathname?.match('/dashboard/');
 
   if (status === 'authenticated')
     return (
-      <header className="bg-secondary">
+      <header className="bg-primary">
         <div className="container-fluid">
-          {isOnDashboard ? (
-            <Link href={'/'}>
-              <FontAwesomeIcon icon={faHome} className="me-1" />
-              Naar voorkant
-            </Link>
-          ) : (
-            <Link href={'/dashboard'}>
-              <FontAwesomeIcon icon={faDashboard} className="me-1" />
-              Naar dashboard
-            </Link>
-          )}
+          <div className="admin-bar d-flex align-items-center justify-content-between">
+            <div className="d-flex align-items-center">
+              {isNestedDashboard && (
+                <Link
+                  className="link-dark p-2 text-decoration-none"
+                  href="/dashboard"
+                >
+                  <FontAwesomeIcon className="me-2" icon={faCaretLeft} />
+                  <span className="">Terug naar dashboard</span>
+                </Link>
+              )}
+            </div>
+            <div className="d-flex align-items-center">
+              {isOnDashboard ? (
+                <Link className="link-dark text-decoration-none" href={'/'}>
+                  <FontAwesomeIcon icon={faHome} className="me-1" />
+                  Naar voorkant
+                </Link>
+              ) : (
+                <Link
+                  className="link-dark text-decoration-none"
+                  href={'/dashboard'}
+                >
+                  <FontAwesomeIcon icon={faDashboard} className="me-1" />
+                  Naar dashboard
+                </Link>
+              )}
 
-          <button className="btn btn-light" onClick={() => signOut()}>
-            Log uit
-          </button>
+              <button
+                className="btn btn-link link-dark"
+                onClick={() => signOut()}
+              >
+                Log uit
+              </button>
+            </div>
+          </div>
         </div>
       </header>
     );

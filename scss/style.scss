@@ -9,6 +9,16 @@
 @import '../node_modules/bootstrap/scss/utilities';
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
-@import 'layouts/frontend-layout.scss';
+// Layouts
+@import 'layouts/frontend-layout';
+@import 'layouts/dashboard-expos-layout';
 
-@import 'partials/expo-display.scss';
+// Partials
+@import 'partials/expo-display';
+@import 'partials/admin-bar';
+
+@layer base {
+  [data-nextjs-scroll-focus-boundary] {
+    display: contents;
+  }
+}
