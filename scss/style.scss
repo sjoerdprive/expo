@@ -9,6 +9,9 @@
 @import '../node_modules/bootstrap/scss/utilities';
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
+// Utils
+@import 'utils';
+
 // Layouts
 @import 'layouts/frontend-layout';
 @import 'layouts/dashboard-expos-layout';

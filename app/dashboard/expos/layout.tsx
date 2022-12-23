@@ -1,9 +1,6 @@
 import { Expo } from '@prisma/client';
 import { prisma } from '#/prisma';
 import ExpoDrawer from 'partials/ExpoDrawer';
-import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 
 interface IExpoDashboardLayoutProps {
   children: React.ReactNode;
@@ -19,13 +16,15 @@ export default async function ExpoDashboardLayout({
       <aside className="d-flex flex-column shadow">
         <ExpoDrawer expos={expos} />
       </aside>
-      <main>{children}</main>
+      <main className="h-100 overflow-auto">{children}</main>
     </div>
   );
 }
 
 async function getExpos() {
-  const expos: Expo[] = await prisma.expo.findMany();
+  const expos = await prisma.expo.findMany({
+    include: { category: true },
+  });
 
   return expos;
 }

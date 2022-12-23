@@ -11,6 +11,22 @@ async function main() {
     }
   })
 
+  await prisma.category.upsert({
+    where: { id: "1" }, update: {}, create: {
+      name: "Commissies",
+      slug: "commissies",
+      id: "1"
+    }
+  })
+
+  await prisma.category.upsert({
+    where: { id: "2" }, update: {}, create: {
+      name: "Experimenten",
+      slug: "experimenten",
+      id: "2"
+    }
+  })
+
 
   await prisma.expo.deleteMany()
 

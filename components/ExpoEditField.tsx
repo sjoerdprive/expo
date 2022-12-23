@@ -6,7 +6,7 @@ interface IExpoEditFieldProps {
   name: string;
   label: string;
   type?: string;
-  match?: RegExp;
+  pattern?: string;
   required?: boolean;
   value?: string;
   description?: string;
@@ -15,7 +15,7 @@ interface IExpoEditFieldProps {
 export default function ExpoEditField({
   label,
   value: initValue,
-  match,
+  pattern,
   description,
   ...inputProps
 }: IExpoEditFieldProps) {
@@ -34,20 +34,27 @@ export default function ExpoEditField({
           {label}
         </label>
         {description && <small className="text-muted">{description}</small>}
-        <input
-          className="form-control mt-2"
-          id={fieldId}
-          {...inputProps}
-          aria-describedby={errorId}
-          value={value}
-          onChange={(e) => setValue(e.currentTarget.value)}
-          aria-invalid={invalid}
-          onBlur={() => {
-            if (match) {
-              setError(validate(value, match));
-            }
-          }}
-        />
+        {inputProps.type === 'textarea' ? (
+          <textarea
+            className="form-control mt-2"
+            id={fieldId}
+            {...inputProps}
+            aria-describedby={errorId}
+            value={value}
+            onChange={(e) => setValue(e.currentTarget.value)}
+            aria-invalid={invalid}
+          ></textarea>
+        ) : (
+          <input
+            className="form-control mt-2"
+            id={fieldId}
+            {...inputProps}
+            aria-describedby={errorId}
+            value={value}
+            onChange={(e) => setValue(e.currentTarget.value)}
+            aria-invalid={invalid}
+          />
+        )}
       </div>
       <span id={errorId} className="text-warning">
         {errors.map((error, i) => (

@@ -2,10 +2,10 @@ import { prisma } from '#/prisma';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWarning } from '@fortawesome/free-solid-svg-icons';
 import ExpoEditForm from 'partials/ExpoEditForm';
-import Link from 'next/link';
+import { FormEvent } from 'react';
 
 interface IEditExpoPageProps {
-  params: { expoId: string };
+  params: { expoId: string; query: any };
 }
 
 export default async function EditExpoPage({ params }: IEditExpoPageProps) {
@@ -42,5 +42,8 @@ export default async function EditExpoPage({ params }: IEditExpoPageProps) {
 }
 
 async function getExpoById(id: string) {
-  return await prisma.expo.findUnique({ where: { id: id } });
+  return await prisma.expo.findUnique({
+    where: { id: id },
+    include: { images: true },
+  });
 }

@@ -18,7 +18,7 @@ export default function FontSelect() {
 
 async function fetchFonts(): Promise<any[]> {
   const res = await fetch(
-    `https://webfonts.googleapis.com/v1/webfonts?sort=POPULARITY&key=${process.env.GOOGLE_FONTS_KEY}`
+    `https://webfonts.googleapis.com/v1/webfonts?sort=POPULARITY&key=AIzaSyAKYz3WR8RB4olia1hz1E8_YZ45zY1pqcI`
   );
 
   const data = await res.json();

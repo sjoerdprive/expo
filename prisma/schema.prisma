@@ -10,11 +10,12 @@ generator client {
 model Expo {
   id         String    @id @unique @default(uuid())
   title      String
-  blurb      String?
+  blurb      String?   @default("")
   slug       String    @unique
   category   Category? @relation(fields: [categoryId], references: [id])
   categoryId String?
   images     Image[]
+  status     String    @default("draft")
 }
 
 model Image {
@@ -22,8 +23,8 @@ model Image {
   filename String
   src      String  @unique
   title    String
-  alt      String
-  caption  String?
+  alt      String  @default("")
+  caption  String? @default("")
   Expo     Expo?   @relation(fields: [expoId], references: [id])
   expoId   String?
 }

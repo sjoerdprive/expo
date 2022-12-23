@@ -1,30 +1,63 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+'use client';
+import { faGears, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Expo } from '@prisma/client';
+import { Expo, Category } from '@prisma/client';
 import ExpoDrawerItem from 'components/ExpoDrawerItem';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface IExpoNavProps {
-  expos: Expo[];
+  expos: (Expo & { category: Category | null })[];
 }
 
 export default function ExpoDrawer({ expos }: IExpoNavProps) {
-  console.log(expos);
+  const [showCategory, setShowCategory] = useState(false);
   return (
-    <nav className="h-100 expo-nav">
-      <ul className="d-flex flex-column justify-content-between h-100 list-group">
-        <div role="presentation">
-          {expos.map((expo, i) => {
-            return <ExpoDrawerItem key={i} expo={expo} />;
-          })}
-        </div>
-        <li className='w-100'>
-          <Link href={'/dashboard/expos/create'} className="btn btn-primary w-100">
-            <FontAwesomeIcon icon={faPlus} className="me-2" />
-            Nieuwe Expo
-          </Link>
-        </li>
-      </ul>
-    </nav>
+    <>
+      <fieldset className='bg-light'>
+        <details className="px-4 py-2">
+          <summary>
+            Opties <FontAwesomeIcon className="me-2" icon={faGears} />
+          </summary>
+          <div className="py-2">  
+            <div className="form-check">
+              <label className="form-check-label">
+                Toon categorie
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={showCategory}
+                  onChange={(e) => setShowCategory(e.currentTarget.checked)}
+                />
+              </label>
+            </div>
+          </div>
+        </details>
+      </fieldset>
+      <nav className="h-100 expo-nav">
+        <ul className="d-flex flex-column justify-content-between h-100 list-group">
+          <div role="presentation">
+            {expos.map((expo, i) => {
+              return (
+                <ExpoDrawerItem
+                  key={i}
+                  expo={expo}
+                  showCategory={showCategory}
+                />
+              );
+            })}
+          </div>
+          <li className="w-100">
+            <Link
+              href={'/dashboard/expos/create'}
+              className="btn btn-primary w-100"
+            >
+              <FontAwesomeIcon icon={faPlus} className="me-2" />
+              Nieuwe Expo
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    </>
   );
 }

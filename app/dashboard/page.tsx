@@ -1,7 +1,5 @@
 import { faCogs, faStar, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import DashboardToptask from 'components/DashboardToptask';
-import FontSelect from 'components/FontSelect';
-import { Suspense } from 'react';
 
 export default function DashboardPage() {
   return (
