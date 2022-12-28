@@ -1,0 +1,52 @@
+$toolbar-open-step-speed: 100ms;
+
+.expo-media-editor {
+  .expo-media-editor-toolbar {
+    height: 3em;
+
+    .toolbar {
+      transition: height $toolbar-open-step-speed,
+        visibility calc(3 * $toolbar-open-step-speed)
+          calc(2 * $toolbar-open-step-speed) linear;
+      height: 0px;
+      overflow: hidden;
+      visibility: hidden;
+
+      .button-wrapper {
+        opacity: 0;
+        transition: opacity $toolbar-open-step-speed linear;
+      }
+
+      &.open {
+        transition: height $toolbar-open-step-speed linear;
+        height: 100%;
+        visibility: visible;
+
+        .button-wrapper {
+          opacity: 1;
+          transition: opacity $toolbar-open-step-speed
+            calc(2 * $toolbar-open-step-speed) linear;
+        }
+      }
+    }
+  }
+
+  .expo-media {
+    position: relative;
+
+    .indicator {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0.3em;
+
+      transition: width 0.1s ease-out;
+    }
+    &.selected {
+      .indicator {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -19,6 +19,8 @@
 // Partials
 @import 'partials/expo-display';
 @import 'partials/admin-bar';
+@import 'partials/expo-media-editor';
+@import 'partials/expo-file-uploader';
 
 @layer base {
   [data-nextjs-scroll-focus-boundary] {

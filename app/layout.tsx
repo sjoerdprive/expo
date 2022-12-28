@@ -8,6 +8,8 @@ import { Session } from 'next-auth/core/types';
 
 config.autoAddCss = false; /* eslint-disable import/first */
 import { headers, cookies } from 'next/headers';
+import { authOptions } from '#/pages/api/auth/[...nextauth]';
+import { unstable_getServerSession } from 'next-auth/next';
 
 async function getSession(cookie: string): Promise<Session> {
   const response = await fetch('http://localhost:3000/api/auth/session', {
@@ -22,7 +24,8 @@ async function getSession(cookie: string): Promise<Session> {
 }
 
 export default async function DefaultLayout({ children }: any) {
-  const session = await getSession(headers().get('cookie') ?? '');
+  // const session = await getSession(headers().get('cookie') ?? '');
+  const session = await unstable_getServerSession(authOptions);
 
   return (
     <html lang="nl">

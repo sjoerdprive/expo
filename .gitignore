@@ -16,6 +16,7 @@
 /build
 /prisma/migrations
 /prisma/storage.db
+/public/
 
 # misc
 .DS_Store

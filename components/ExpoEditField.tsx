@@ -1,5 +1,6 @@
 'use client';
 
+import classNames from 'classnames';
 import { useId, useRef, useState } from 'react';
 
 interface IExpoEditFieldProps {
@@ -7,9 +8,11 @@ interface IExpoEditFieldProps {
   label: string;
   type?: string;
   pattern?: string;
+  className?: string;
   required?: boolean;
   value?: string;
   description?: string;
+  multiple?: boolean;
 }
 
 export default function ExpoEditField({
@@ -17,6 +20,7 @@ export default function ExpoEditField({
   value: initValue,
   pattern,
   description,
+  className,
   ...inputProps
 }: IExpoEditFieldProps) {
   const [errors, setError] = useState<String[]>([]);
@@ -29,7 +33,7 @@ export default function ExpoEditField({
 
   return (
     <>
-      <div className="d-flex flex-column mb-4">
+      <div className={classNames('d-flex flex-column', className)}>
         <label className="form-label h5 m-0" htmlFor={fieldId}>
           {label}
         </label>
@@ -53,6 +57,7 @@ export default function ExpoEditField({
             value={value}
             onChange={(e) => setValue(e.currentTarget.value)}
             aria-invalid={invalid}
+            
           />
         )}
       </div>

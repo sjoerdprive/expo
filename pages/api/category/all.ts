@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from '#/prisma';
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+export default async function allCategories (req: NextApiRequest, res: NextApiResponse) {
 
   try {
 

@@ -13,6 +13,7 @@ export default async function EditExpoPage({ params }: IEditExpoPageProps) {
 
   const expo = await getExpoById(expoId);
 
+
   if (!expo)
     return (
       <div className="border border-warn rounded text-warn p-5">

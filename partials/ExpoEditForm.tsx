@@ -5,8 +5,11 @@ import React, { FormEvent, Suspense, useState } from 'react';
 import former from '#/utils/former';
 import ExpoEditToolbar from 'partials/ExpoEditToolbar';
 import ExpoMediaEditor from './ExpoMediaEditor';
+import { ExpoComponent } from '#/types/ExpoComponent';
+import UploadPreview from 'components/UploadPreview';
+import FileUploader from 'components/FileUploader';
 
-interface IExpoEditForm {
+interface IExpoEditForm extends ExpoComponent {
   expo: Expo & { images: Image[] };
 }
 
@@ -15,39 +18,52 @@ export default function ExpoEditForm({ expo }: IExpoEditForm) {
     'loading' | 'pristine' | 'edited' | 'error'
   >('pristine');
 
+  // const status = 'pristine';
+  // const setStatus = (e: any) => {};
+
   return (
-    <form
-      onSubmit={(e) => saveExpo(e, setStatus)}
-      onChange={() => setStatus('edited')}
-    >
-      <div className="mb-3">
-        <ExpoEditToolbar expo={expo} expoStatus={status} />
-      </div>
-      <div className="p-2">
-        <input type="hidden" name="id" value={expo.id} />
-        <ExpoEditField
-          description="De titel van je Expo. Deze is bovenaan de pagina te zien."
-          name="title"
-          label="Titel"
-          value={expo.title}
-        />
-        <ExpoEditField
-          description="Een (korte) beschrijving van jouw Expo. Denk aan de tekst achterop een
+    <>
+      <form
+        encType="multipart/form-data"
+        onSubmit={(e) => saveExpo(e, setStatus)}
+        onChange={() => setStatus('edited')}
+        method="POST"
+      >
+        <div className="mb-3">
+          <ExpoEditToolbar expo={expo} expoStatus={status} />
+        </div>
+        <div className="p-2">
+          <input type="hidden" name="id" value={expo.id} />
+          <ExpoEditField
+            description="De titel van je Expo. Deze is bovenaan de pagina te zien."
+            name="title"
+            label="Titel"
+            value={expo.title}
+            className="mb-4"
+          />
+          <ExpoEditField
+            description="Een (korte) beschrijving van jouw Expo. Denk aan de tekst achterop een
           boek."
-          label="Blurb"
-          name="blurb"
-          type="textarea"
-          value={expo.blurb || ''}
-        />
-        <ExpoEditField
-          description="Alle foto's en video's die jou Expo maken."
-          label="Media"
-          name="media"
-          type="file"
-        />
+            label="Blurb"
+            name="blurb"
+            type="textarea"
+            value={expo.blurb || ''}
+            className="mb-4"
+          />
+
+          <FileUploader
+            name="media"
+            label="Media"
+            description="Alle foto's en video's die jou Expo maken."
+            multiple
+            showPreview
+          />
+        </div>
+      </form>
+      <div className="p-2">
+        <ExpoMediaEditor images={expo.images} />
       </div>
-      <ExpoMediaEditor images={expo.images} />
-    </form>
+    </>
   );
 }
 
@@ -61,17 +77,14 @@ async function saveExpo(
 
   setStatus('loading');
 
-  const data = former(e.currentTarget);
+  // const data = former(e.currentTarget);
+  const data = new FormData(e.currentTarget);
 
   const res = await fetch('/api/expo/save', {
     method: 'POST',
-    body: JSON.stringify(data),
+    body: data,
   });
-
-  const responseBody = await res.json();
 
   if (res.status === 200) setStatus('pristine');
   if (res.status !== 200) setStatus('error');
-
-  console.log(responseBody);
 }
