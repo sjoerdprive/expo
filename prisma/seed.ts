@@ -43,68 +43,41 @@ async function main() {
     where: { id: "1919051" }, update: {}, create: {
       title: "Arrangement of guitars",
       slug: 'arrangement-of-guitars',
-      images: {
-        create: [{
-          filename: `nb`,
-          alt: "",
-          src: `/gitaren naar boven.jpg`,
-          title: "Gitaren naar boven",
-        }, {
-          filename: `no`,
-          alt: "",
-          src: `/gitaren naar onder.jpg`,
-          title: "Gitaren naar onder",
-        }, {
-          filename: `r`,
-          alt: "",
-          src: `/gitaren recht.jpg`,
-          title: "Gitaren recht",
-        }, {
-          filename: `sc`,
-          alt: "",
-          src: `/gitaren schuin.jpg`,
-          title: "Gitaren schuin",
-        }, {
-          filename: `np`,
-          alt: "",
-          src: `/gitaren spiraal.jpg`,
-          title: "Gitaren spiraal",
-        }]
-      }
     }
   })
 
-  for (let i = 0; i < 6; i++) {
+  // for (let i = 0; i < 6; i++) {
 
-    const title = words[Math.round(Math.random() * words.length)] + " " + words[Math.round(Math.random() * words.length)] + " " + words[Math.round(Math.random() * words.length)];
-    let numImgs = Math.round(Math.random() * 6);
+  //   const title = words[Math.round(Math.random() * words.length)] + " " + words[Math.round(Math.random() * words.length)] + " " + words[Math.round(Math.random() * words.length)];
+  //   let numImgs = Math.round(Math.random() * 6);
 
-    let imgs: Image[] = []
+  //   let imgs: Image[] = []
 
-    for (numImgs; numImgs > 0; numImgs--) {
+  //   for (numImgs; numImgs > 0; numImgs--) {
 
-      const w = Math.round(Math.random() * 700) + 100;
-      const h = Math.round(Math.random() * 700) + 100;
+  //     const w = Math.round(Math.random() * 700) + 100;
+  //     const h = Math.round(Math.random() * 700) + 100;
 
-      const img = {
-        filename: `img`,
-        alt: "",
-        src: `https://picsum.photos/${w}/${h}`,
-        title: words[numImgs],
-      }
-      imgs.push(img as any)
-    }
-    await prisma.expo.upsert({
-      where: { id: i.toString() }, update: {}, create: {
-        title: title,
-        slug: 'expo-' + i,
-        images: {
-          create: imgs
-        }
+  //     const img = {
+  //       filename: `img`,
+  //       path: "",
+  //       alt: "",
+  //       src: `https://picsum.photos/${w}/${h}`,
+  //       title: words[numImgs],
+  //     }
+  //     imgs.push(img as any)
+  //   }
+  //   await prisma.expo.upsert({
+  //     where: { id: i.toString() }, update: {}, create: {
+  //       title: title,
+  //       slug: 'expo-' + i,
+  //       images: {
+  //         create: imgs
+  //       }
 
-      }
-    })
-  }
+  //     }
+  //   })
+  // }
 
 }
 

@@ -6,17 +6,18 @@ import { faSave, faX, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { use, useId } from 'react';
 import { Category } from '@prisma/client';
 import classNames from 'classnames';
+import { ExpoStatus } from './ExpoEditForm';
 
 interface IExpoEditToolbarProps {
   expo: Expo;
-  expoStatus: 'loading' | 'pristine' | 'edited' | 'error';
+  expoStatus: ExpoStatus;
 }
 
 enum messages {
   error = 'Er is iets misgegaan tijdens het opslaan',
   pristine = 'Er zijn geen veranderingen om op te slaan',
   loading = '',
-  edited = '',
+  edited = 'Er zijn veranderingen die nog niet zijn opgeslagen',
 }
 
 export default function ExpoEditToolbar({
@@ -54,7 +55,6 @@ export default function ExpoEditToolbar({
             </select>
           </label>
           <button
-            disabled={expoStatus === 'pristine'}
             type="submit"
             className="btn btn-primary"
             aria-describedby={statusId}

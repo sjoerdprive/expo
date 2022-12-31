@@ -12,6 +12,7 @@ interface IFileUploaderProps {
   description?: string;
   multiple?: boolean;
   showPreview?: boolean;
+  ref?: React.Ref<HTMLInputElement>;
 }
 
 export default function FileUploader({

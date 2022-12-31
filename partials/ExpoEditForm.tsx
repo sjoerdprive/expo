@@ -1,22 +1,28 @@
 'use client';
 import ExpoEditField from 'components/ExpoEditField';
 import { Expo, Image } from '@prisma/client';
-import React, { FormEvent, Suspense, useState } from 'react';
-import former from '#/utils/former';
+import React, { FormEvent, use, useEffect, useRef, useState } from 'react';
 import ExpoEditToolbar from 'partials/ExpoEditToolbar';
 import ExpoMediaEditor from './ExpoMediaEditor';
 import { ExpoComponent } from '#/types/ExpoComponent';
-import UploadPreview from 'components/UploadPreview';
 import FileUploader from 'components/FileUploader';
 
 interface IExpoEditForm extends ExpoComponent {
   expo: Expo & { images: Image[] };
 }
 
-export default function ExpoEditForm({ expo }: IExpoEditForm) {
-  const [status, setStatus] = useState<
-    'loading' | 'pristine' | 'edited' | 'error'
-  >('pristine');
+export type ExpoStatus = 'loading' | 'pristine' | 'edited' | 'error';
+
+export default function ExpoEditForm({ expo: initExpo }: IExpoEditForm) {
+  const [expo, setExpo] = useState(initExpo);
+  const [status, setStatus] = useState<ExpoStatus>('pristine');
+  const fileField = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (status === 'pristine') {
+      if (fileField.current) fileField.current.value = '';
+    }
+  }, [status]);
 
   // const status = 'pristine';
   // const setStatus = (e: any) => {};
@@ -25,7 +31,16 @@ export default function ExpoEditForm({ expo }: IExpoEditForm) {
     <>
       <form
         encType="multipart/form-data"
-        onSubmit={(e) => saveExpo(e, setStatus)}
+        onSubmit={async (e) => {
+          setStatus('loading');
+
+          const res = await saveExpo(e);
+
+          setStatus(res.status);
+
+          if (res.status === 'error') return;
+          setExpo((prev) => res.data || prev);
+        }}
         onChange={() => setStatus('edited')}
         method="POST"
       >
@@ -57,27 +72,20 @@ export default function ExpoEditForm({ expo }: IExpoEditForm) {
             description="Alle foto's en video's die jou Expo maken."
             multiple
             showPreview
+            ref={fileField}
           />
         </div>
+        <div className="p-2">
+          <ExpoMediaEditor images={expo.images} />
+        </div>
       </form>
-      <div className="p-2">
-        <ExpoMediaEditor images={expo.images} />
-      </div>
     </>
   );
 }
 
-async function saveExpo(
-  e: FormEvent<HTMLFormElement>,
-  setStatus: React.Dispatch<
-    React.SetStateAction<'loading' | 'pristine' | 'edited' | 'error'>
-  >
-) {
+async function saveExpo(e: FormEvent<HTMLFormElement>) {
   e.preventDefault();
 
-  setStatus('loading');
-
-  // const data = former(e.currentTarget);
   const data = new FormData(e.currentTarget);
 
   const res = await fetch('/api/expo/save', {
@@ -85,6 +93,7 @@ async function saveExpo(
     body: data,
   });
 
-  if (res.status === 200) setStatus('pristine');
-  if (res.status !== 200) setStatus('error');
+  const status: ExpoStatus = res.status === 200 ? 'pristine' : 'error';
+
+  return { data: await res.json(), status: status };
 }

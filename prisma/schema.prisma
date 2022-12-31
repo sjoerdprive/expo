@@ -19,14 +19,14 @@ model Expo {
 }
 
 model Image {
-  id       String  @id @unique @default(uuid())
-  filename String
-  src      String  @unique
-  title    String
-  alt      String  @default("")
-  caption  String? @default("")
-  Expo     Expo?   @relation(fields: [expoId], references: [id])
-  expoId   String?
+  id      String  @id @unique @default(uuid())
+  key     String
+  src     String  @unique
+  title   String
+  alt     String  @default("")
+  caption String? @default("")
+  Expo    Expo?   @relation(fields: [expoId], references: [id])
+  expoId  String?
 }
 
 model Category {

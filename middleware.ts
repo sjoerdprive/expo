@@ -1,6 +1,3 @@
-import { NextRequest, NextResponse } from "next/server";
+export { default } from "next-auth/middleware"
 
-export default function handler(req: NextRequest) {
-
-  return NextResponse.next()
-}
+export const config = { matcher: ["/dashboard"] }

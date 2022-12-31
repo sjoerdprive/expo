@@ -1,7 +1,7 @@
 'use client';
 import { Expo, Image } from '@prisma/client';
 import ExpoMedia from 'components/expoMedia';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ExpoMediaEditorToolbar from './ExpoMediaEditorToolbar';
 
 interface IExpoMediaEditorProps {
@@ -11,39 +11,87 @@ interface IExpoMediaEditorProps {
 
 export default function ExpoMediaEditor({
   expo,
-  images = [],
+  images,
 }: IExpoMediaEditorProps) {
-  const [selectedIndeces, setSelectedIndeces] = useState<number[]>([]);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [idsToRemove, setIdsToRemove] = useState<string[]>([]);
 
-  const hasSelections = selectedIndeces.length > 0;
+  useEffect(() => {
+    setSelectedIds([]);
+    setIdsToRemove([]);
+  }, [images]);
+
+  const hasSelections = selectedIds.length > 0;
+  const hasMarkedIdsInSelection = selectedIds.some((val) =>
+    idsToRemove.includes(val)
+  );
+  const isAllSelectionsMarked = selectedIds.every((val) =>
+    idsToRemove.includes(val)
+  );
 
   return (
     <div className="expo-media-editor">
+      <input
+        type="hidden"
+        name="fileIdsToRemove"
+        value={idsToRemove.length > 0 ? idsToRemove.join(';') : []}
+      />
       <div className="mb-2">
-        <ExpoMediaEditorToolbar open={hasSelections} />
+        <ExpoMediaEditorToolbar
+          setForRemove={() => {
+            setIdsToRemove((prev) => prev.concat(selectedIds));
+            setSelectedIds([]);
+          }}
+          unsetForRemove={() => {
+            setIdsToRemove((prev) => {
+              return prev.filter((val) => !selectedIds.includes(val));
+            });
+            setSelectedIds([]);
+          }}
+          open={hasSelections}
+          showSetButton={!isAllSelectionsMarked}
+          showUnsetButton={hasMarkedIdsInSelection}
+        />
       </div>
+      {idsToRemove.length > 0 && (
+        <p>
+          Gemarkeerde afbeeldingen worden verwijderd wanneer je je Expo opslaat.
+        </p>
+      )}
       <ul className="list-unstyled row g-3">
-        {images?.map((image, i) => {
-          const isSelected = selectedIndeces.includes(i);
-          return (
-            <li key={i} className="col-12 col-lg-6 col-xxl-4 overflow-hidden">
-              <ExpoMedia
-                isSelected={isSelected}
-                image={image}
-                select={() => {
-                  console.log('select');
-                  setSelectedIndeces((prev: any) => prev.concat(i));
-                }}
-                deSelect={() => {
-                  console.log('deselect');
-                  setSelectedIndeces((prev: any) =>
-                    prev.filter((index: any) => index !== i)
-                  );
-                }}
-              />
-            </li>
-          );
-        })}
+        {images ? (
+          images.map((image, i) => {
+            const isSelected = selectedIds.includes(image.id);
+            const isSetForRemove = idsToRemove.includes(image.id);
+            return (
+              <li
+                key={image.id}
+                className="col-12 col-lg-6 col-xxl-4 overflow-hidden"
+              >
+                <ExpoMedia
+                  isSelected={isSelected}
+                  isSetForRemove={isSetForRemove}
+                  image={image}
+                  select={() => {
+                    console.log('select');
+                    setSelectedIds((prev: any) => prev.concat(image.id));
+                  }}
+                  deSelect={() => {
+                    console.log('deselect');
+                    setSelectedIds((prev: any) =>
+                      prev.filter((index: any) => index !== image.id)
+                    );
+                  }}
+                />
+              </li>
+            );
+          })
+        ) : (
+          <p>
+            Deze Expo bevat nog geen media. Klik of sleep op het invoerveld om
+            bestanden te uploaden.
+          </p>
+        )}
       </ul>
     </div>
   );
