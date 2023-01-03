@@ -31,16 +31,17 @@ export default function ExpoEditForm({ expo: initExpo }: IExpoEditForm) {
     <>
       <form
         encType="multipart/form-data"
-        onSubmit={async (e) => {
-          setStatus('loading');
+        // onSubmit={async (e) => {
+        //   setStatus('loading');
 
-          const res = await saveExpo(e);
+        //   const res = await saveExpo(e);
 
-          setStatus(res.status);
+        //   setStatus(res.status);
 
-          if (res.status === 'error') return;
-          setExpo((prev) => res.data || prev);
-        }}
+        //   if (res.status === 'error') return;
+        //   setExpo((prev) => res.data || prev);
+        // }}
+        action="/api/expo/save"
         onChange={() => setStatus('edited')}
         method="POST"
       >

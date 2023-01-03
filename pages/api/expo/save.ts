@@ -7,6 +7,7 @@ import multerS3 from 'multer-s3'
 import nc from "next-connect";
 import { Image } from '@prisma/client';
 import * as path from "path";
+import { slugify } from "#/utils/slugify";
 
 const storage = multerS3({
   s3: s3,
@@ -29,7 +30,7 @@ handler.post(async (req: NextApiRequest & { files: any }, res: NextApiResponse) 
   try {
     const { id, title, blurb, status, category, fileIdsToRemove } = req.body as { [key: string]: string }
 
-    const fileIdsToRemoveArray = fileIdsToRemove === '' ? [] : fileIdsToRemove.split(';')
+    const fileIdsToRemoveArray = fileIdsToRemove === '' ? [] : fileIdsToRemove?.split(';')
     const filesKeysToRemove = await prisma.image.findMany({ where: { id: { in: fileIdsToRemoveArray } }, select: { key: true } })
 
     console.log({ fileIdsToRemoveArray })
@@ -46,11 +47,18 @@ handler.post(async (req: NextApiRequest & { files: any }, res: NextApiResponse) 
       } as Image
     })
 
-    const expo = await prisma.expo.update({
-      where: { id: id }, data: {
+    const expo = await prisma.expo.upsert({
+      where: { id: id || "" },
+      create: {
+        title,
+        blurb,
+        slug: slugify(title),
+      },
+      update: {
         id,
         title,
         blurb,
+        slug: title ? slugify(title) : undefined,
         categoryId: category,
         status,
         images: {
@@ -59,14 +67,14 @@ handler.post(async (req: NextApiRequest & { files: any }, res: NextApiResponse) 
         }
       }, include: {
         images: true
-      }
+      },
     })
 
     if (filesKeysToRemove.length > 0) {
       await s3.send(new DeleteObjectsCommand({ Bucket: process.env.AWS_BUCKET_NAME, Delete: { Objects: filesKeysToRemove.map(key => ({ Key: key.key })) } }))
     }
-
-    res.status(200).send(expo)
+    res.status(200).redirect('/dashboard/expos/edit/' + expo.id)
+    // res.status(200).send(expo)
 
   } catch (err) {
     console.log(err)

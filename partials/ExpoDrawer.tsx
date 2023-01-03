@@ -5,6 +5,8 @@ import { Expo, Category } from '@prisma/client';
 import ExpoDrawerItem from 'components/ExpoDrawerItem';
 import Link from 'next/link';
 import { useState } from 'react';
+import CreateExpoModal from './CreateExpoModal';
+import Modal from './Modal';
 
 interface IExpoNavProps {
   expos: (Expo & { category: Category | null })[];
@@ -14,12 +16,12 @@ export default function ExpoDrawer({ expos }: IExpoNavProps) {
   const [showCategory, setShowCategory] = useState(false);
   return (
     <>
-      <fieldset className='bg-light'>
+      <fieldset className="bg-light">
         <details className="px-4 py-2">
           <summary>
             Opties <FontAwesomeIcon className="me-2" icon={faGears} />
           </summary>
-          <div className="py-2">  
+          <div className="py-2">
             <div className="form-check">
               <label className="form-check-label">
                 Toon categorie
@@ -48,13 +50,7 @@ export default function ExpoDrawer({ expos }: IExpoNavProps) {
             })}
           </div>
           <li className="w-100">
-            <Link
-              href={'/dashboard/expos/create'}
-              className="btn btn-primary w-100"
-            >
-              <FontAwesomeIcon icon={faPlus} className="me-2" />
-              Nieuwe Expo
-            </Link>
+            <CreateExpoModal />
           </li>
         </ul>
       </nav>

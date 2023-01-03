@@ -1,6 +1,6 @@
 'use client';
 import { Expo, Image } from '@prisma/client';
-import ExpoMedia from 'components/expoMedia';
+import ExpoMedia from 'components/ExpoMedia';
 import { useEffect, useState } from 'react';
 import ExpoMediaEditorToolbar from './ExpoMediaEditorToolbar';
 

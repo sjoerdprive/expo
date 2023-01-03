@@ -2,11 +2,17 @@
 import Link from 'next/link';
 import { Expo } from '@prisma/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faX, faWarning } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSave,
+  faX,
+  faWarning,
+  faTrashCan,
+} from '@fortawesome/free-solid-svg-icons';
 import { use, useId } from 'react';
 import { Category } from '@prisma/client';
 import classNames from 'classnames';
 import { ExpoStatus } from './ExpoEditForm';
+import DeleteExpoModal from './DeleteExpoModal';
 
 interface IExpoEditToolbarProps {
   expo: Expo;
@@ -65,6 +71,7 @@ export default function ExpoEditToolbar({
             />
             Opslaan
           </button>
+          <DeleteExpoModal expo={expo} />
         </div>
       </div>
       <div className="p-2 d-flex justify-content-end">
