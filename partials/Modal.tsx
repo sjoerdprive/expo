@@ -1,6 +1,7 @@
 'use client';
 import { useId } from 'react';
 import { v4 as uuid } from 'uuid';
+import classNames from 'classnames';
 
 interface IModalProps {
   children?: React.ReactNode;
@@ -8,6 +9,7 @@ interface IModalProps {
   modalId: string;
   btnText: React.ReactNode;
   btnClass?: string;
+  size?: 'sm' | 'lg' | 'fullscreen';
 }
 
 export default function Modal({
@@ -16,6 +18,7 @@ export default function Modal({
   btnText,
   btnClass,
   modalId,
+  size,
 }: IModalProps) {
   const labelId = useId();
 
@@ -30,7 +33,11 @@ export default function Modal({
         {btnText}
       </button>
       <div className="modal fade" id={modalId}>
-        <div className="modal-dialog" role="dialog" aria-labelledby={labelId}>
+        <div
+          className={classNames('modal-dialog', size && `modal-${size}`)}
+          role="dialog"
+          aria-labelledby={labelId}
+        >
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id={labelId}>

@@ -16,6 +16,9 @@ export default function ExpoMediaEditor({
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [idsToRemove, setIdsToRemove] = useState<string[]>([]);
 
+  const selectedImages =
+    images?.filter((img) => selectedIds.includes(img.id)) || [];
+
   useEffect(() => {
     setSelectedIds([]);
     setIdsToRemove([]);
@@ -38,6 +41,7 @@ export default function ExpoMediaEditor({
       />
       <div className="mb-2">
         <ExpoMediaEditorToolbar
+          selectedMedia={selectedImages}
           setForRemove={() => {
             setIdsToRemove((prev) => prev.concat(selectedIds));
             setSelectedIds([]);

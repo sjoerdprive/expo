@@ -21,12 +21,15 @@ export default async function ExpoPage({ params }: IExpoPageProps) {
   return (
     <div className="expo-display">
       <h1>{expo?.title}</h1>
-      <ul className="list-unstyled image-list">
+      <ul className="list-unstyled image-list py-5">
         {expo?.images?.map((img, i) => {
-          const { expoId, ...imgProps } = img;
+          const { expoId, key, caption, ...imgProps } = img;
           return (
-            <li className="image-item" key={i}>
-              <img {...imgProps} />
+            <li className="image-item" key={key}>
+              <figure>
+                <img {...imgProps} />
+                {caption && <figcaption>{caption}</figcaption>}
+              </figure>
             </li>
           );
         })}

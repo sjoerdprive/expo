@@ -7,6 +7,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import EditMediaModal from './EditMediaModal';
+import { Image } from '@prisma/client';
 
 interface IExpoMediaEditorToolbarProps {
   open?: boolean;
@@ -14,6 +16,7 @@ interface IExpoMediaEditorToolbarProps {
   unsetForRemove: any;
   showUnsetButton: boolean;
   showSetButton: boolean;
+  selectedMedia: Image[];
 }
 
 export default function ExpoMediaEditorToolbar({
@@ -22,23 +25,18 @@ export default function ExpoMediaEditorToolbar({
   unsetForRemove,
   showUnsetButton,
   showSetButton,
+  selectedMedia,
 }: IExpoMediaEditorToolbarProps) {
   return (
     <div className={'expo-media-editor-toolbar'}>
       <div
         className={classNames(
-          'toolbar d-flex align-items-center bg-secondary text-white rounded-top',
+          'toolbar d-flex align-items-center bg-secondary rounded-top',
           open ? 'open' : 'closed'
         )}
       >
         <div className="button-wrapper">
-          <button
-            type="button"
-            className="btn btn-link text-white text-decoration-none"
-          >
-            <FontAwesomeIcon icon={faPencil} className="me-2" />
-            Bewerk
-          </button>
+          <EditMediaModal media={selectedMedia} />
           {showSetButton && (
             <button
               type="button"

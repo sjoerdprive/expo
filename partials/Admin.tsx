@@ -6,16 +6,20 @@ import {
   faHome,
   faDashboard,
   faCaretLeft,
+  faPencil,
 } from '@fortawesome/free-solid-svg-icons';
 import { usePathname } from 'next/navigation';
 
-export default function Admin() {
+export default function Admin({ expoId }: any) {
   // const { data: session, status } = useSession()
   const status = 'authenticated';
   const pathname = usePathname();
 
   const isOnDashboard = pathname?.match('/dashboard');
   const isNestedDashboard = pathname?.match('/dashboard/');
+  const isInExpo = !!expoId;
+
+  console.log({ expoId });
 
   if (status === 'authenticated')
     return (
@@ -30,6 +34,15 @@ export default function Admin() {
                 >
                   <FontAwesomeIcon className="me-2" icon={faCaretLeft} />
                   <span className="">Terug naar dashboard</span>
+                </Link>
+              )}
+              {isInExpo && (
+                <Link
+                  className="link-dark p-2 text-decoration-none"
+                  href={'/dashboard/expos/edit/' + expoId}
+                >
+                  <FontAwesomeIcon className="me-2" icon={faPencil} />
+                  <span className="">Bewerk deze Expo</span>
                 </Link>
               )}
             </div>

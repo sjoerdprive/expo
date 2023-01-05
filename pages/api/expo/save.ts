@@ -29,15 +29,10 @@ handler.post(async (req: NextApiRequest & { files: any }, res: NextApiResponse) 
 
   try {
     const { id, title, blurb, status, category, fileIdsToRemove } = req.body as { [key: string]: string }
+    const { files } = req;
 
     const fileIdsToRemoveArray = fileIdsToRemove === '' ? [] : fileIdsToRemove?.split(';')
     const filesKeysToRemove = await prisma.image.findMany({ where: { id: { in: fileIdsToRemoveArray } }, select: { key: true } })
-
-    console.log({ fileIdsToRemoveArray })
-
-    const { files } = req;
-
-    console.log({ files })
 
     const expoFiles: Image[] = files.map((file: any) => {
       return {

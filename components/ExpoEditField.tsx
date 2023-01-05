@@ -13,6 +13,7 @@ interface IExpoEditFieldProps {
   value?: string;
   description?: string;
   multiple?: boolean;
+  defaultValue?: string;
 }
 
 export default function ExpoEditField({
@@ -20,6 +21,7 @@ export default function ExpoEditField({
   value: initValue,
   pattern,
   description,
+  defaultValue,
   className,
   ...inputProps
 }: IExpoEditFieldProps) {
@@ -46,18 +48,19 @@ export default function ExpoEditField({
             aria-describedby={errorId}
             value={value}
             onChange={(e) => setValue(e.currentTarget.value)}
+            defaultValue={defaultValue}
             aria-invalid={invalid}
           ></textarea>
         ) : (
           <input
             className="form-control mt-2"
+            defaultValue={defaultValue}
             id={fieldId}
             {...inputProps}
             aria-describedby={errorId}
             value={value}
             onChange={(e) => setValue(e.currentTarget.value)}
             aria-invalid={invalid}
-            
           />
         )}
       </div>

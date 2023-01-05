@@ -29,7 +29,7 @@ export default function DeleteExpoModal({ expo }: IDeleteExpoModalProps) {
           </p>
           <button
             type="button"
-            className="btn btn-warning text-white"
+            className="btn btn-warning text-white me-2"
             data-bs-dismiss="modal"
             onClick={() => deleteExpo(expo.id)}
           >
