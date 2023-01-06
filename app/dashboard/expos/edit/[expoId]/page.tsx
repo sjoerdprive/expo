@@ -23,7 +23,7 @@ export default async function EditExpoPage({ params }: IEditExpoPageProps) {
     );
 
   return (
-    <div className="p-5 container">
+    <div className="py-5 px-1 px-md-5 container">
       <div className="row mb-5">
         <div className="col">
           <h1 className="mb-0">{expo.title}</h1>

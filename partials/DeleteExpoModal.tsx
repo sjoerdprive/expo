@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from './Modal';
-import { faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import ExpoCreateForm from './ExpoCreateForm';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Expo } from '@prisma/client';
 
 interface IDeleteExpoModalProps {
@@ -16,8 +15,8 @@ export default function DeleteExpoModal({ expo }: IDeleteExpoModalProps) {
         modalId="delete-expo-modal"
         btnText={
           <span className="">
-            <FontAwesomeIcon icon={faTrashCan} className="me-2" />
-            <span>Verwijder Expo</span>
+            <FontAwesomeIcon icon={faTrashCan} />
+            <span className="button-label">Verwijder Expo</span>
           </span>
         }
         title="Verwijder Expo"
@@ -33,8 +32,8 @@ export default function DeleteExpoModal({ expo }: IDeleteExpoModalProps) {
             data-bs-dismiss="modal"
             onClick={() => deleteExpo(expo.id)}
           >
-            <FontAwesomeIcon icon={faTrashCan} className="me-2" />
-            <span>Weg ermee!</span>
+            <FontAwesomeIcon icon={faTrashCan} />
+            <span className="button-label">Weg ermee!</span>
           </button>
           <button
             type="button"

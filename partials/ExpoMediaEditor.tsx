@@ -33,36 +33,35 @@ export default function ExpoMediaEditor({
   );
 
   return (
-    <div className="expo-media-editor">
+    <div className="expo-media-editor position-relative">
       <input
         type="hidden"
         name="fileIdsToRemove"
         value={idsToRemove.length > 0 ? idsToRemove.join(';') : []}
       />
-      <div className="mb-2">
-        <ExpoMediaEditorToolbar
-          selectedMedia={selectedImages}
-          setForRemove={() => {
-            setIdsToRemove((prev) => prev.concat(selectedIds));
-            setSelectedIds([]);
-          }}
-          unsetForRemove={() => {
-            setIdsToRemove((prev) => {
-              return prev.filter((val) => !selectedIds.includes(val));
-            });
-            setSelectedIds([]);
-          }}
-          open={hasSelections}
-          showSetButton={!isAllSelectionsMarked}
-          showUnsetButton={hasMarkedIdsInSelection}
-        />
-      </div>
+      <ExpoMediaEditorToolbar
+        className="mb-2"
+        selectedMedia={selectedImages}
+        setForRemove={() => {
+          setIdsToRemove((prev) => prev.concat(selectedIds));
+          setSelectedIds([]);
+        }}
+        unsetForRemove={() => {
+          setIdsToRemove((prev) => {
+            return prev.filter((val) => !selectedIds.includes(val));
+          });
+          setSelectedIds([]);
+        }}
+        open={hasSelections}
+        showSetButton={!isAllSelectionsMarked}
+        showUnsetButton={hasMarkedIdsInSelection}
+      />
       {idsToRemove.length > 0 && (
         <p>
           Gemarkeerde afbeeldingen worden verwijderd wanneer je je Expo opslaat.
         </p>
       )}
-      <ul className="list-unstyled row g-3">
+      <ul className="list-unstyled row g-3" aria-multiselectable="true">
         {images ? (
           images.map((image, i) => {
             const isSelected = selectedIds.includes(image.id);

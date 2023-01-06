@@ -44,12 +44,15 @@ export default function ExpoEditForm({ expo: initExpo }: IExpoEditForm) {
         action="/api/expo/save"
         onChange={() => setStatus('edited')}
         method="POST"
+        className="position-relative"
       >
-        <div className="mb-3">
-          <ExpoEditToolbar expo={expo} expoStatus={status} />
-        </div>
+        <ExpoEditToolbar
+          className="mb-3"
+          expo={expo}
+          expoStatus={status}
+        />
+        <input type="hidden" name="id" value={expo.id} />
         <div className="p-2">
-          <input type="hidden" name="id" value={expo.id} />
           <ExpoEditField
             description="De titel van je Expo. Deze is bovenaan de pagina te zien."
             name="title"

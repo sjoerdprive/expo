@@ -21,7 +21,7 @@ export default function ExpoMedia({
 }: IExpoMediaProps) {
   return (
     <button
-      aria-pressed={isSelected}
+      aria-selected={isSelected}
       type="button"
       className={classNames(
         'expo-media border-0 p-0 w-100 position-relative',

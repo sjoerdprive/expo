@@ -43,7 +43,7 @@ export default async function DefaultLayout({ children, params }: any) {
           integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
           crossOrigin="anonymous"
         ></script>
-        <title>Expo {expo && `| ${expo.title}`}</title>
+        <title>Expo {expo ? `| ${expo.title}` : ''}</title>
       </head>
       <body className="vh-100">
         <AuthContext session={session}>

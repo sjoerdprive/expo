@@ -17,6 +17,7 @@ interface IExpoMediaEditorToolbarProps {
   showUnsetButton: boolean;
   showSetButton: boolean;
   selectedMedia: Image[];
+  className?: string;
 }
 
 export default function ExpoMediaEditorToolbar({
@@ -26,9 +27,10 @@ export default function ExpoMediaEditorToolbar({
   showUnsetButton,
   showSetButton,
   selectedMedia,
+  className,
 }: IExpoMediaEditorToolbarProps) {
   return (
-    <div className={'expo-media-editor-toolbar'}>
+    <div className={classNames('expo-media-editor-toolbar', className)}>
       <div
         className={classNames(
           'toolbar d-flex align-items-center bg-secondary rounded-top',
@@ -43,8 +45,8 @@ export default function ExpoMediaEditorToolbar({
               onClick={setForRemove}
               className="btn btn-link text-white text-decoration-none"
             >
-              <FontAwesomeIcon icon={faTrashCan} className="me-2" />
-              Markeer voor verwijderen
+              <FontAwesomeIcon icon={faTrashCan} />
+              <span className="button-label">Markeer voor verwijderen</span>
             </button>
           )}
           {showUnsetButton && (
@@ -53,8 +55,8 @@ export default function ExpoMediaEditorToolbar({
               onClick={unsetForRemove}
               className="btn btn-link text-white text-decoration-none"
             >
-              <FontAwesomeIcon icon={faUndo} className="me-2" />
-              Markeren ongedaan maken
+              <FontAwesomeIcon icon={faUndo} />
+              <span className="button-label">Markeren ongedaan maken</span>
             </button>
           )}
         </div>

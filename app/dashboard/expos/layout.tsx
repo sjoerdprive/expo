@@ -16,7 +16,7 @@ export default async function ExpoDashboardLayout({
       <aside className="d-flex flex-column shadow">
         <ExpoDrawer expos={expos} />
       </aside>
-      <main className="h-100 overflow-auto">{children}</main>
+      <main className="h-100">{children}</main>
     </div>
   );
 }

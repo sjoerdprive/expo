@@ -20,8 +20,8 @@ export default function EditMediaModal({ media }: IDeleteExpoModalProps) {
         modalId="edit-media-modal"
         btnText={
           <span>
-            <FontAwesomeIcon icon={faPencil} className="me-2" />
-            Bewerk
+            <FontAwesomeIcon icon={faPencil} />
+            <span className="button-label">Bewerk</span>
           </span>
         }
         title="Media bewerken"

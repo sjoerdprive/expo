@@ -1,3 +1,22 @@
 .tiny {
   font-size: 0.675em;
 }
+
+.button-label {
+  margin-inline-start: 0.5rem;
+  @include media-breakpoint-down(md) {
+    @include visually-hidden;
+  }
+}
+
+@each $k, $v in $spacers {
+  .z-#{$k}00 {
+    z-index: calc(2#{$k} * 100);
+  }
+}
+
+@each $k, $v in $spacers {
+  .top-#{$k} {
+    top: $v;
+  }
+}
