@@ -15,7 +15,7 @@ export default function ExpoCreateForm({}: IExpoEditForm) {
     <>
       <form
         encType="multipart/form-data"
-        action="/api/expo/save"
+        action="/api/expo/update"
         // onSubmit={async (e) => {
         //   setStatus('loading');
 

@@ -11,6 +11,7 @@ import { headers, cookies } from 'next/headers';
 import { authOptions } from '#/pages/api/auth/[...nextauth]';
 import { unstable_getServerSession } from 'next-auth/next';
 import { prisma } from '#/prisma';
+import RootStyler from 'components/RootStyler';
 
 async function getSession(cookie: string): Promise<Session> {
   const response = await fetch('http://localhost:3000/api/auth/session', {
@@ -29,8 +30,7 @@ export default async function DefaultLayout({ children, params }: any) {
   const session = await unstable_getServerSession(authOptions);
 
   const expo = params.slug ? await getExpo(params.slug) : undefined;
-
-  console.log(params);
+  const settings = await getGlobalSettings();
 
   return (
     <html lang="nl">
@@ -43,7 +43,10 @@ export default async function DefaultLayout({ children, params }: any) {
           integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
           crossOrigin="anonymous"
         ></script>
-        <title>Expo {expo ? `| ${expo.title}` : ''}</title>
+        {/* <RootStyler settings={settings} /> */}
+        <title>
+          {expo ? `${settings?.siteName} | ${expo.title}` : settings?.siteName}
+        </title>
       </head>
       <body className="vh-100">
         <AuthContext session={session}>
@@ -59,4 +62,10 @@ async function getExpo(slug: string) {
   const expo = await prisma.expo.findFirst({ where: { slug: slug } });
 
   return expo;
+}
+
+async function getGlobalSettings() {
+  const settings = await prisma.settings.findFirst({});
+
+  return settings;
 }

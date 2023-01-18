@@ -20,8 +20,6 @@ export default function Admin({ expoId }: any) {
   const isNestedDashboard = pathname?.match('/dashboard/');
   const isInExpo = !!expoId;
 
-  console.log({ expoId });
-
   if (status === 'authenticated')
     return (
       <header className="bg-primary">

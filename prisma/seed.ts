@@ -11,6 +11,16 @@ async function main() {
     }
   })
 
+  await prisma.settings.upsert({
+    where: {
+      id: "0"
+    },
+    create: {
+    },
+    update: {}
+  })
+
+
   await prisma.category.upsert({
     where: { id: "0" }, update: {}, create: {
       name: "Geen",
@@ -46,38 +56,6 @@ async function main() {
     }
   })
 
-  // for (let i = 0; i < 6; i++) {
-
-  //   const title = words[Math.round(Math.random() * words.length)] + " " + words[Math.round(Math.random() * words.length)] + " " + words[Math.round(Math.random() * words.length)];
-  //   let numImgs = Math.round(Math.random() * 6);
-
-  //   let imgs: Image[] = []
-
-  //   for (numImgs; numImgs > 0; numImgs--) {
-
-  //     const w = Math.round(Math.random() * 700) + 100;
-  //     const h = Math.round(Math.random() * 700) + 100;
-
-  //     const img = {
-  //       filename: `img`,
-  //       path: "",
-  //       alt: "",
-  //       src: `https://picsum.photos/${w}/${h}`,
-  //       title: words[numImgs],
-  //     }
-  //     imgs.push(img as any)
-  //   }
-  //   await prisma.expo.upsert({
-  //     where: { id: i.toString() }, update: {}, create: {
-  //       title: title,
-  //       slug: 'expo-' + i,
-  //       images: {
-  //         create: imgs
-  //       }
-
-  //     }
-  //   })
-  // }
 
 }
 

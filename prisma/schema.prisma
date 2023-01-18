@@ -7,11 +7,18 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Settings {
+  id            String @id @unique @default(uuid())
+  themeColorRGB String @default("255, 225, 91")
+  siteName      String @default("Expo")
+}
+
 model Expo {
   id         String    @id @unique @default(uuid())
   title      String
   blurb      String?   @default("")
   slug       String    @unique
+  layout     String    @default("horizontal")
   category   Category? @relation(fields: [categoryId], references: [id])
   categoryId String?
   images     Image[]

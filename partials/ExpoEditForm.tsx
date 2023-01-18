@@ -41,7 +41,7 @@ export default function ExpoEditForm({ expo: initExpo }: IExpoEditForm) {
         //   if (res.status === 'error') return;
         //   setExpo((prev) => res.data || prev);
         // }}
-        action="/api/expo/save"
+        action="/api/expo/update"
         onChange={() => setStatus('edited')}
         method="POST"
         className="position-relative"
