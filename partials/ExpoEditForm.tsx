@@ -6,6 +6,7 @@ import ExpoEditToolbar from 'partials/ExpoEditToolbar';
 import ExpoMediaEditor from './ExpoMediaEditor';
 import { ExpoComponent } from '#/types/ExpoComponent';
 import FileUploader from 'components/FileUploader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IExpoEditForm extends ExpoComponent {
   expo: Expo & { images: Image[] };
@@ -46,11 +47,7 @@ export default function ExpoEditForm({ expo: initExpo }: IExpoEditForm) {
         method="POST"
         className="position-relative"
       >
-        <ExpoEditToolbar
-          className="mb-3"
-          expo={expo}
-          expoStatus={status}
-        />
+        <ExpoEditToolbar className="mb-3" expo={expo} expoStatus={status} />
         <input type="hidden" name="id" value={expo.id} />
         <div className="p-2">
           <ExpoEditField
@@ -78,6 +75,16 @@ export default function ExpoEditForm({ expo: initExpo }: IExpoEditForm) {
             showPreview
             ref={fileField}
           />
+          <div className="btn-group">
+            <button type="button" className="btn btn-secondary">
+              {/* <FontAwesomeIcon icon={fa} /> */}
+              Row
+            </button>
+            <button type="button" className="btn btn-secondary">
+              {/* <FontAwesomeIcon icon={fa} /> */}
+              Column
+            </button>
+          </div>
         </div>
         <div className="p-2">
           <ExpoMediaEditor images={expo.images} />
